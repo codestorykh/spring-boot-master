@@ -2,6 +2,7 @@ package com.rean.springbootmaster.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.Immutable;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,8 +13,9 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+//@Immutable
 @Entity
-@Table(name = "todos", schema = "public")
+@Table(name = "todos")
 public class Todo implements Serializable {
 
     @Serial
@@ -28,4 +30,7 @@ public class Todo implements Serializable {
 
     @Column(name = "description")
     private String description;
+
+    private String status;
+
 }

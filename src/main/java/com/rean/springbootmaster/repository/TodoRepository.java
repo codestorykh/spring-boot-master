@@ -8,5 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface TodoRepository extends JpaRepository<Todo, Long> {
-    Optional<Todo> findFirstById(Long id);
+    Optional<Todo> findFirstByIdAndStatus(Long id, String status);
+
 }

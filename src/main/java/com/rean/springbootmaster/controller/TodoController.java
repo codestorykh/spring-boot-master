@@ -29,11 +29,8 @@ public class TodoController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Todo> updateCompleted(@PathVariable Long id) {
-        Todo todo = todoService.update(id);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(todo.getId()).toUri();
-        return ResponseEntity.ok().header("Location", location.toString()).build();
+    public ResponseEntity<Object> updateCompleted(@PathVariable Long id) {
+        return ResponseEntity.ok(new Object());
     }
 
     @DeleteMapping("/{id}")
