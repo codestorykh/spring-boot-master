@@ -1,13 +1,22 @@
 package com.rean.springbootmaster.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 
+@Getter
+@Setter
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "todos", schema = "public")
 public class Todo implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -18,5 +27,5 @@ public class Todo implements Serializable {
     private String name;
 
     @Column(name = "description")
-    private String descEn;
+    private String description;
 }

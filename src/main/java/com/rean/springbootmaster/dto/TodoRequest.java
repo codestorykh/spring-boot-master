@@ -1,10 +1,5 @@
 package com.rean.springbootmaster.dto;
 
 
-public class TodoRequest {
-
-    private Long id;
-    private String name;
-    private String desc;
-
+public record TodoRequest(Long id, String name, String description) {
 }
