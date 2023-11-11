@@ -1,6 +1,7 @@
 package com.rean.springbootmaster.service;
 
-import com.springcourse.dto.TodoRequest;
+
+import com.rean.springbootmaster.dto.TodoRequest;
 
 public interface TodoService {
 
