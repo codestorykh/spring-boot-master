@@ -1,52 +1,69 @@
 package com.rean.springbootmaster.controller;
 
+
+import com.rean.springbootmaster.dto.TodoBatch;
 import com.rean.springbootmaster.dto.TodoRequest;
 import com.rean.springbootmaster.dto.TodoResponse;
-import com.rean.springbootmaster.model.Todo;
 import com.rean.springbootmaster.service.TodoService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 
 @RestController
-@RequiredArgsConstructor
 @Slf4j
+@RequestMapping(
+    value = "/api/todos",
+    consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE
+)
+
+@CrossOrigin(origins = "http://localhost:8181")
 public class TodoController {
 
     private final TodoService todoService;
 
-    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT})
-    public ResponseEntity<?> createOrUpdate(@RequestBody TodoRequest todo) {
-
-        TodoResponse todoInstance = todoService.create(todo);
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}").buildAndExpand(todoInstance.id()).toUri();
-        return ResponseEntity.created(location).build();
+    public TodoController(TodoService todoService) {
+        this.todoService = todoService;
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Object> updateCompleted(@PathVariable Long id) {
-        return ResponseEntity.ok(new Object());
+    @PostMapping()
+    public ResponseEntity<?> create(@RequestBody TodoRequest todoRequest) {
+        log.info("Intercept create todo request {}", todoRequest);
+        return new ResponseEntity<>(todoService.create(todoRequest), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/batch")
+    public ResponseEntity<Object> batchCreate(@RequestBody TodoBatch todoBatch) {
+        return new ResponseEntity<>(new Object(), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TodoResponse> update(@PathVariable Long id,
+                                               @RequestBody TodoRequest todoRequest) {
+        log.info("Intercept update todo request {}", todoRequest);
+        return new ResponseEntity<>(todoService.update(todoRequest, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Todo> deleteById(@PathVariable Long id) {
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        log.info("Intercept delete todo request {}", id);
         todoService.delete(id);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<TodoResponse > getById(@PathVariable Long id) {
-        return ResponseEntity.ok(todoService.get(id));
+    @GetMapping("/{id}")
+    public ResponseEntity<TodoResponse> checkById(@PathVariable Long id) {
+        log.info("Intercept check by id todo request {}", id);
+        return new ResponseEntity<>(todoService.get(id), HttpStatus.OK);
     }
-
     @GetMapping()
-    public ResponseEntity<Iterable<TodoResponse>> getAll() {
-        return ResponseEntity.ok(todoService.getAll(1, 10));
+    public ResponseEntity<Object> getAll(@RequestParam(defaultValue = "0") Integer page,
+                                         @RequestParam(defaultValue = "10") Integer size) {
+        log.info("Intercept get all todo request");
+        return new ResponseEntity<>(todoService.getAll(page, size), HttpStatus.OK);
     }
+
 }
