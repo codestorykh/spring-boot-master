@@ -2,27 +2,19 @@ package com.rean.springbootmaster;
 
 
 import com.rean.springbootmaster.dto.TodoBatchRequest;
-import com.rean.springbootmaster.dto.TodoBatchResponse;
-import com.rean.springbootmaster.dto.TodoRequest;
-import com.rean.springbootmaster.dto.TodoResponse;
-import com.rean.springbootmaster.model.Todo;
 import com.rean.springbootmaster.repository.TodoRepository;
 import com.rean.springbootmaster.service.TodoService;
 import jakarta.annotation.PostConstruct;
-
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 import java.util.List;
 
 @SpringBootApplication
-@RequiredArgsConstructor
 public class SpringBootMasterApplication {
 
 
@@ -102,7 +94,7 @@ public class SpringBootMasterApplication {
 		return args -> {
 			System.out.println("Hello World");
 			System.out.println(todoRepository.findAll());
-    }
+    };
 	}
     
 }
