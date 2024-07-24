@@ -1,4 +1,4 @@
-package com.rean.springbootmaster.service;
+package com.rean.springbootmaster.todo.service;
 
 public interface TodoService {
     void addTodo();

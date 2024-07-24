@@ -1,6 +1,6 @@
-package com.rean.springbootmaster.repository;
+package com.rean.springbootmaster.todo.repository;
 
-import com.rean.springbootmaster.model.Todo;
+import com.rean.springbootmaster.todo.model.Todo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

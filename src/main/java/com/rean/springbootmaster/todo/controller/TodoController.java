@@ -1,6 +1,6 @@
-package com.rean.springbootmaster.controller;
+package com.rean.springbootmaster.todo.controller;
 
-import com.rean.springbootmaster.service.TodoService;
+import com.rean.springbootmaster.todo.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +30,7 @@ public class TodoController {
     }
 
     @GetMapping("/{id}")
-    public void getTodo() {
+    public void getTodo(@PathVariable String id) {
         todoService.getTodo();
     }
 

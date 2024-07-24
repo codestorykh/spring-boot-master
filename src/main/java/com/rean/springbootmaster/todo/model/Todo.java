@@ -1,4 +1,4 @@
-package com.rean.springbootmaster.model;
+package com.rean.springbootmaster.todo.model;
 
 import jakarta.persistence.*;
 

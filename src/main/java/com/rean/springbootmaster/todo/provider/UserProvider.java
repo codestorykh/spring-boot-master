@@ -1,4 +1,4 @@
-package com.rean.springbootmaster.provider;
+package com.rean.springbootmaster.todo.provider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Configuration;

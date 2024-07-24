@@ -1,7 +1,7 @@
-package com.rean.springbootmaster.service.impl;
+package com.rean.springbootmaster.todo.service.impl;
 
-import com.rean.springbootmaster.repository.TodoRepository;
-import com.rean.springbootmaster.service.TodoService;
+import com.rean.springbootmaster.todo.repository.TodoRepository;
+import com.rean.springbootmaster.todo.service.TodoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
