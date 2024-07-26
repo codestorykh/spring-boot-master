@@ -35,13 +35,13 @@ public class TodoServiceImpl implements TodoService {
     public TodoResponse update(TodoRequest todoRequest, Long id) {
         Optional<Todo> todoOptional = todoRepository.findFirstById(id);
         if(todoOptional.isEmpty()){
-            log.error("Todo not found with id: {}", todoRequest.getId());
-            throw new ResourceNotFoundException("Todo not found with id: " + todoRequest.getId());
+            log.error("Todo not found with id: {}", todoRequest.id());
+            throw new ResourceNotFoundException("Todo not found with id: " + todoRequest.id());
         }
         Todo todo = todoOptional.get();
-        todo.setTitle(todoRequest.getTitle());
-        todo.setDescription(todoRequest.getDescription());
-        todo.setCompleted(todoRequest.isCompleted());
+        todo.setTitle(todoRequest.title());
+        todo.setDescription(todoRequest.description());
+        todo.setCompleted(todoRequest.completed());
         todoRepository.save(todo);
         return convertTodoToTodoResponse(todo);
     }
@@ -75,18 +75,14 @@ public class TodoServiceImpl implements TodoService {
 
     public Todo convertTodoRequestToTodoEntity(TodoRequest todoRequest) {
         Todo todo = new Todo();
-        todo.setTitle(todoRequest.getTitle());
-        todo.setDescription(todoRequest.getDescription());
-        todo.setCompleted(todoRequest.isCompleted());
+        todo.setTitle(todoRequest.title());
+        todo.setDescription(todoRequest.description());
+        todo.setCompleted(todoRequest.completed());
         return todo;
     }
 
     public TodoResponse convertTodoToTodoResponse(Todo todo) {
-        return TodoResponse.builder()
-                .id(todo.getId())
-                .title(todo.getTitle())
-                .description(todo.getDescription())
-                .completed(todo.isCompleted())
-                .build();
+        return new TodoResponse(todo.getId(), todo.getTitle(), todo.getDescription(), todo.isCompleted());
+
     }
 }
