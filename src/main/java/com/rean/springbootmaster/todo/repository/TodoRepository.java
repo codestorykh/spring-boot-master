@@ -7,11 +7,14 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * repository for communication with database
  */
-@RepositoryRestResource(collectionResourceRel = "todos", path = "todos")
 public interface TodoRepository extends JpaRepository<Todo, Long> {
-    List<Todo> findByTitle(@Param("title") String title);
+
+    Optional<Todo> findFirstById(long id);
+    Optional<Todo> findFirstByIdAndAndCompleted(long id, boolean completed);
+
 }
