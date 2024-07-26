@@ -2,6 +2,7 @@ package com.rean.springbootmaster.todo.service.impl;
 
 import com.rean.springbootmaster.todo.dto.TodoRequest;
 import com.rean.springbootmaster.todo.dto.TodoResponse;
+import com.rean.springbootmaster.todo.exception.ResourceNotFoundException;
 import com.rean.springbootmaster.todo.model.Todo;
 import com.rean.springbootmaster.todo.repository.TodoRepository;
 import com.rean.springbootmaster.todo.service.TodoService;
@@ -35,7 +36,7 @@ public class TodoServiceImpl implements TodoService {
         Optional<Todo> todoOptional = todoRepository.findFirstById(id);
         if(todoOptional.isEmpty()){
             log.error("Todo not found with id: {}", todoRequest.getId());
-            return null;
+            throw new ResourceNotFoundException("Todo not found with id: " + todoRequest.getId());
         }
         Todo todo = todoOptional.get();
         todo.setTitle(todoRequest.getTitle());
@@ -58,7 +59,10 @@ public class TodoServiceImpl implements TodoService {
     public TodoResponse get(Long id) {
         return todoRepository.findFirstById(id)
                 .map(this::convertTodoToTodoResponse)
-                .orElse(null);
+                .orElseThrow(() -> {
+                    log.error("Todo not found with id: {}", id);
+                    return new ResourceNotFoundException("Todo not found with id: " + id);
+                });
     }
 
     @Override
@@ -66,7 +70,7 @@ public class TodoServiceImpl implements TodoService {
         return todoRepository.findAll().stream()
                 .map(this::convertTodoToTodoResponse)
                 .findAny()
-                .orElse(null);
+                .orElseThrow(() -> new ResourceNotFoundException("No todos found"));
     }
 
     public Todo convertTodoRequestToTodoEntity(TodoRequest todoRequest) {

@@ -7,8 +7,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.rean.springbootmaster.todo.constant.Constant.API_VERSION;
+
 @RestController
-@RequestMapping("/api/v1/todos")
+@RequestMapping(API_VERSION + "/todos")
 public class TodoController {
 
     private final TodoService todoService;
