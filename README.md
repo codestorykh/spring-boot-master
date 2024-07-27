@@ -4,12 +4,15 @@ _You can learn how to start with Spring Boot, a powerful framework for quickly b
 
 **List of topics for this course**
 
-* Restful API
-* Logging
-* Spring Boot Actuator
+* Spring Framework
 * Dependency injection
-* Unit tests
-* Java-Bean validation
+* Spring Boot
+* Restful API
+* Spring Data REST
+* Spring Data JPA
 * Exception Handling
+* Swagger UI OpenAPI
 * Lombok
-* Running Spring Boot Applications
+* Convert class to record
+* Rest client
+* Unit tests
