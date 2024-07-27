@@ -7,6 +7,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.rean.springbootmaster.todo.constant.Constant.API_VERSION;
 
 @RestController
@@ -41,7 +43,7 @@ public class TodoController {
     }
 
     @GetMapping
-    public HttpEntity<TodoResponse> getAll(){
+    public HttpEntity<List<TodoResponse>> getAll(){
         return ResponseEntity.ok(todoService.getAll());
     }
 }
