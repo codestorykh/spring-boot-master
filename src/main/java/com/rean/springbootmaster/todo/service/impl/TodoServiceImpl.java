@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -66,11 +67,11 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
-    public TodoResponse getAll() {
-        return todoRepository.findAll().stream()
+    public List<TodoResponse> getAll() {
+        return todoRepository.findAll()
+                .stream()
                 .map(this::convertTodoToTodoResponse)
-                .findAny()
-                .orElseThrow(() -> new ResourceNotFoundException("No todos found"));
+                .toList();
     }
 
     public Todo convertTodoRequestToTodoEntity(TodoRequest todoRequest) {
