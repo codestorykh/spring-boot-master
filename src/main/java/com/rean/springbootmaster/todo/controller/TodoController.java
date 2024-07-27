@@ -7,6 +7,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/todos")
 public class TodoController {
@@ -39,7 +41,7 @@ public class TodoController {
     }
 
     @GetMapping
-    public HttpEntity<TodoResponse> getAll(){
+    public HttpEntity<List<TodoResponse>> getAll(){
         return ResponseEntity.ok(todoService.getAll());
     }
 }
