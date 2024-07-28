@@ -1,4 +1,4 @@
-package com.rean.springbootmaster.todo.config;
+package com.rean.springbootmaster.user.config;
 
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class OpenApiConfiguration {
     private String prodUrl;
 
     @Bean
-    public OpenAPI myOpenAPI() {
+    public OpenAPI openAPI() {
         Server devServer = new Server();
         devServer.setUrl(devUrl);
         devServer.setDescription("Server URL in Development environment");
@@ -36,13 +36,16 @@ public class OpenApiConfiguration {
         contact.setName("CodeStoryKH");
         contact.setUrl("https://www.codestorykh.com");
 
-        License mitLicense = new License().name("MIT License").url("https://choosealicense.com/licenses/mit/");
+        License mitLicense = new License()
+                .name("MIT License")
+                .url("https://choosealicense.com/licenses/mit/");
 
         Info info = new Info()
                 .title("CRUD API with Spring Boot")
                 .version("1.0")
                 .contact(contact)
-                .description("API description").termsOfService("https://www.codesotrykh.com/terms")
+                .description("API description")
+                .termsOfService("https://www.codesotrykh.com/terms")
                 .license(mitLicense);
 
         return new OpenAPI().info(info).servers(List.of(devServer, prodServer));

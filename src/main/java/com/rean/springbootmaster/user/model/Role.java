@@ -6,7 +6,12 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.Collection;
 
-@Data
+/**
+ * @Data it will error while fetch user from db
+ * remove @Data and add @Getter @Setter and no need to add @ToString
+ */
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

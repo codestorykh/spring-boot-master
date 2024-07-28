@@ -2,24 +2,29 @@ package com.rean.springbootmaster.user.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.*;
 
-@Data
+/**
+ * @Data it will error while fetch user from db
+ * remove @Data and add @Getter @Setter and no need to add @ToString
+ */
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity
 @Table(name = "tbl_user")
-public class User implements Serializable, UserDetails {
+public class User implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
     @Column(name = "email", unique = true, nullable = false)
     private String email;
@@ -27,6 +32,12 @@ public class User implements Serializable, UserDetails {
     private String password;
     @Column(name = "full_name")
     private String fullName;
+    private int attempt;
+    private String status;
+    @Column(name = "created", updatable = false)
+    private LocalDateTime created;
+    @Column(name = "updated", insertable = false)
+    private LocalDateTime updated;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -37,40 +48,5 @@ public class User implements Serializable, UserDetails {
                     name = "role_id", referencedColumnName = "id"))
     private Collection<Role> roles;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
-        roles.forEach(role -> grantedAuthorities.add(new SimpleGrantedAuthority(role.getName())));
-        return List.of(new SimpleGrantedAuthority(grantedAuthorities.toString()));
-    }
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return username;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
 }
