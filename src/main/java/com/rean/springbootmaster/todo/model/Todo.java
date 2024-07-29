@@ -1,12 +1,15 @@
 package com.rean.springbootmaster.todo.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 
-/**
- * model for mapping todo table
- */
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "todo")
 public class Todo implements Serializable {
@@ -24,55 +27,5 @@ public class Todo implements Serializable {
     @Column(name = "completed")
     private boolean completed;
 
-    public Todo() {
-    }
-
-    public Todo(String title, String description, boolean completed) {
-        this.title = title;
-        this.description = description;
-        this.completed = completed;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public boolean isCompleted() {
-        return completed;
-    }
-
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
-    }
-
-    @Override
-    public String toString() {
-        return "Todo{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", completed=" + completed +
-                '}';
-    }
 
 }
