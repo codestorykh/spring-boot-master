@@ -3,8 +3,6 @@ server:
   forward-headers-strategy: framework
 
 spring:
-  profiles:
-    active: dev
   application:
     name: customer-services
   datasource:
