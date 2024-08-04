@@ -36,6 +36,18 @@ public class CustomUserDetailService implements UserDetailsService {
             log.warn("Username {} unauthorized", username);
             throw new CustomMessageException("Unauthorized", String.valueOf(HttpStatus.UNAUTHORIZED.value()));
         }
+        user.ifPresent(
+                u -> {
+                    if(!u.getStatus().equals(Constant.ACT)){
+                        log.warn("Username {} blocked", username);
+                        throw new CustomMessageException("Blocked", String.valueOf(HttpStatus.FORBIDDEN.value()));
+                    }
+                    if (u.getAttempt() > 3) {
+                        log.warn("Username {} attempt more than 3", username);
+                        throw new CustomMessageException("Unauthorized", String.valueOf(HttpStatus.UNAUTHORIZED.value()));
+                    }
+                }
+        );
 
         return new CustomUserDetail(
                 user.get().getUsername(),
@@ -46,26 +58,28 @@ public class CustomUserDetailService implements UserDetailsService {
     }
 
     public void saveUserAttemptAuthentication(String username) {
-        Optional<User> user = userRepository.findFirstByUsernameAndStatus(username, Constant.ACT);
-        if(user.isPresent()) {
-            int attempt = user.get().getAttempt() + 1;
-            user.get().setAttempt(attempt);
-            user.get().setUpdated(LocalDateTime.now());
-            if(user.get().getAttempt() > 3) {
-                log.warn("User {} update status to blocked", username);
-                user.get().setStatus(Constant.BLK);
-            }
-            userRepository.save(user.get());
-        }
+         userRepository.findFirstByUsernameAndStatus(username, Constant.ACT).ifPresent(
+                user -> {
+                    int attempt = user.getAttempt() + 1;
+                    user.setAttempt(attempt);
+                    user.setUpdated(LocalDateTime.now());
+                    if(user.getAttempt() > 3) {
+                        log.warn("User {} update status to blocked", username);
+                        user.setStatus(Constant.BLK);
+                    }
+                    userRepository.save(user);
+                }
+        );
     }
 
     public void updateAttempt(String username) {
-        Optional<User> user = userRepository.findFirstByUsernameAndStatus(username, Constant.ACT);
-        if(user.isPresent()) {
-            user.get().setAttempt(0);
-            user.get().setUpdated(LocalDateTime.now());
-            userRepository.save(user.get());
-        }
+        userRepository.findFirstByUsernameAndStatus(username, Constant.ACT).ifPresent(
+                user -> {
+                    user.setAttempt(0);
+                    user.setUpdated(LocalDateTime.now());
+                    userRepository.save(user);
+                }
+        );
     }
 
 }
